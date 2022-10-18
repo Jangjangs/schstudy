@@ -71,6 +71,6 @@ try{
 	}
 }
 
-out.print(ajaxMessage);
+out.print(ajaxMessage); //웹페이지에 데이터 출력
 
 %>
