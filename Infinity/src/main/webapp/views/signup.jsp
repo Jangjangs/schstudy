@@ -13,28 +13,30 @@
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-password" type="password" name="mb_pw" class="form-control" placeholder="비밀번호">
+			<input id="mb_pw" type="password" name="mb_pw" class="form-control" placeholder="비밀번호">
+			<p id= "pwErrMsg"></p>
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-name" type="text" name="mb_name" class="form-control" placeholder="이름">
+			<input id="mb_name" type="text" name="mb_name" class="form-control" placeholder="이름">
+			<p id= "nameErrMsg"></p>
 		</div>
 
 		<div class="form-group">
-			<input id="sign-up-email" type="email" name="mb_email" class="form-control" placeholder="이메일">
+			<input id="mb_email" type="email" name="mb_email" class="form-control" placeholder="이메일">
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-zipcode" type="text" name="mb_zipcode" class="form-control" placeholder="우편번호">
+			<input id="mb_zipcode" type="text" name="mb_zipcode" class="form-control" placeholder="우편번호">
 			<button type="button" onclick="sample3_execDaumPostcode()">우편번호검색</button>
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-addr" type="text" name="mb_addr" class="form-control" placeholder="주소">
+			<input id="mb_addr" type="text" name="mb_addr" class="form-control" placeholder="주소">
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-detailAddr" type="text" name="mb_detailAddr" class="form-control" placeholder="상세주소">
+			<input id="mb_detailAddr" type="text" name="mb_detailAddr" class="form-control" placeholder="상세주소">
 		</div>
 		
 		<div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
@@ -42,16 +44,16 @@
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-phone" type="tel" name="mb_phone" class="form-control" placeholder="연락처">
+			<input id="mb_phone" type="tel" name="mb_phone" class="form-control" placeholder="연락처">
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-birthdate" type="number" name="mb_birth" class="form-control" placeholder="생년월일">
+			<input id="mb_birth" type="number" name="mb_birth" class="form-control" placeholder="생년월일">
 		</div>
 		
 		<div class="form-group">
-			<input id="sign-up-genderM" type="radio" name="mb_gender" value="M" placeholder="남">M
-			<input id="sign-up-genderF" type="radio" name="mb_gender" value="F" placeholder="여">F
+			<input id="mb_genderM" type="radio" name="mb_gender" value="M" placeholder="남">M
+			<input id="mb_genderF" type="radio" name="mb_gender" value="F" placeholder="여">F
 		</div>
 		
 	
@@ -144,7 +146,7 @@
     }
 </script>
 
-<<script>
+<script>
 $(document).ready(function(){
 	$('#mb_id').on("blur",function(){
 		let mb_id = $('#mb_id').val().trim();
@@ -186,8 +188,103 @@ $(document).ready(function(){
 	            }
 	        });
 		}
-		//console.log("blur"+mb_id);
-	})
+		console.log("blur"+mb_id);
+	});
+	
+	$('#mb_pw').on("keyup",function(){
+		let mb_pw = $('#mb_pw').val().trim();
+		let reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[-_!*@#$%^&])[a-z\d-_!*@#$%^&]{6,16}$/;
+		if(mb_pw == ''){
+			$('#pwErrMsg').text('비밀번호를 입력하세요.');
+			$('#pwErrMsg').css('color','red');
+			$('#mb_pw').focus();
+		} else if (mb_pw.length < 6 || mb_pw.length > 16){
+			$('#pwErrMsg').text('비밀번호를 6~16글자 입력하세요.');
+			$('#pwErrMsg').css('color','red');
+			$('#mb_pw').focus();
+		} else{
+			//비밀번호 정규표현식
+			$('#pwErrMsg').text('');
+		console.log(reg.test(mb_pw));
+		console.log(mb_pw);
+			//var pattern = new RegExp(reg);
+			if( !reg.test(mb_pw) ) {
+				$('#pwErrMsg').text('영문자, 숫자, 특수문자 각1개 이상을 입력하세요.');
+				$('#pwErrMsg').css('color','red');
+			}
+			//Ajax를 이용한 아이디 중복 체크
+			//중복된 아이디입니다.
+			//사용가능한 아이디입니다.
+			// ajax 통신
+	        
+		}
+	});
+	
+	$('input[type=submit]').on("click", function(e){
+		e.preventDefault();
+		let mb_id = $('#mb_id').val().trim();
+		let mb_pw = $('#mb_pw').val().trim();
+		let mb_name = $('#mb_name').val().trim();
+		let mb_email = $('#mb_email').val().trim();
+		let mb_zipcode = $('#mb_zipcode').val().trim();
+		let mb_addr = $('#mb_addr').val().trim();
+		let mb_detailAddr = $('#mb_detailAddr').val().trim();
+		let mb_phone = $('#mb_phone').val().trim();
+		let mb_birth = $('#mb_birth').val().trim();
+		let mb_gender = $('input[name=mb_gender]:checked').val().trim();
+		
+		//console.log($('input[type=submit]'));
+		//console.log($('input[type=submit]'));
+		
+		if(mb_id == ''){
+			$('#idErrMsg').text("아이디를 입력하세요");
+			$('#idErrMsg').css('color','red');
+			$('#mb_id').focus();
+		} else if (mb_pw == ''){
+			$('#pwErrMsg').text("비밀번호를 입력하세요");
+			$('#pwErrMsg').css('color','red');
+			$('#mb_pw').focus();
+		} else if (mb_name == ''){
+			$('#nameErrMsg').text("이름을 입력하세요");
+			$('#nameErrMsg').css('color','red');
+			$('#mb_name').focus();
+		} else{
+			//$(this).hide();
+			//$(this).addClass("disabled");
+			//$(this).attr("disabled","disabled");  html
+			$(this).prop("disabled", true);   //Javascript
+			$.ajax({
+	            type : "POST",            // HTTP method type(GET, POST) 형식이다.
+	            url : "../ajax/ajax.signupAct.jsp",      // 컨트롤러에서 대기중인 URL 주소이다.
+	            data : {mb_id:mb_id,
+	            	mb_pw:mb_pw,
+	            	mb_name:mb_name,
+	            	mb_email:mb_email,
+	    			mb_zipcode:mb_zipcode,
+	    			mb_addr:mb_addr, 
+	    			mb_detailAddr:mb_detailAddr, 
+	    			mb_phone:mb_phone,
+	    			mb_birth:mb_birth,
+	    			mb_gender:mb_gender},            // Json 형식의 데이터이다.
+	    			
+	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+	                // 응답코드 > 0000
+	                if(res == 'Success'){
+	                	location.href="login.jsp"
+	                } else{
+	                	$(this).prop("disabled", false);
+	                	alert("회원가입 실패");
+	                }
+	               //console.log("["+res+"]");
+	            },
+	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                console.log("통신 실패.")
+	            }
+	        });
+		}
+		
+	});
+	
 });
 </script>
 	<%@ include file="includes/loginFooter.jsp" %>
