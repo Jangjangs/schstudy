@@ -121,10 +121,10 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sign-up-zipcode').value = data.zonecode;
-                document.getElementById("sign-up-addr").value = addr;
+                document.getElementById('mb_zipcode').value = data.zonecode;
+                document.getElementById("mb_addr").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sign-up-detailAddr").focus();
+                document.getElementById("mb_detailAddr").focus();
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -147,7 +147,10 @@
 </script>
 
 <script>
+var pwValidate = -1;
+
 $(document).ready(function(){
+	
 	$('#mb_id').on("blur",function(){
 		let mb_id = $('#mb_id').val().trim();
 		if(mb_id == ''){
@@ -193,35 +196,35 @@ $(document).ready(function(){
 	
 	$('#mb_pw').on("keyup",function(){
 		let mb_pw = $('#mb_pw').val().trim();
+		//비밀번호 정규표현식
 		let reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[-_!*@#$%^&])[a-z\d-_!*@#$%^&]{6,16}$/;
+		pwValidate = -1
 		if(mb_pw == ''){
 			$('#pwErrMsg').text('비밀번호를 입력하세요.');
 			$('#pwErrMsg').css('color','red');
-			$('#mb_pw').focus();
+			
 		} else if (mb_pw.length < 6 || mb_pw.length > 16){
 			$('#pwErrMsg').text('비밀번호를 6~16글자 입력하세요.');
 			$('#pwErrMsg').css('color','red');
-			$('#mb_pw').focus();
-		} else{
-			//비밀번호 정규표현식
+			
+		} else if( !reg.test(mb_pw) ) {
+			$('#pwErrMsg').text('영문자, 숫자, 특수문자 각1개 이상을 입력하세요.');
+			$('#pwErrMsg').css('color','red');
+			
+		}	else{
 			$('#pwErrMsg').text('');
+			pwValidate = 0;
+		}
+			 
 		console.log(reg.test(mb_pw));
 		console.log(mb_pw);
-			//var pattern = new RegExp(reg);
-			if( !reg.test(mb_pw) ) {
-				$('#pwErrMsg').text('영문자, 숫자, 특수문자 각1개 이상을 입력하세요.');
-				$('#pwErrMsg').css('color','red');
-			}
-			//Ajax를 이용한 아이디 중복 체크
-			//중복된 아이디입니다.
-			//사용가능한 아이디입니다.
-			// ajax 통신
-	        
-		}
+			
 	});
 	
 	$('input[type=submit]').on("click", function(e){
 		e.preventDefault();
+		console.log(pwValidate);
+		
 		let mb_id = $('#mb_id').val().trim();
 		let mb_pw = $('#mb_pw').val().trim();
 		let mb_name = $('#mb_name').val().trim();
@@ -231,7 +234,7 @@ $(document).ready(function(){
 		let mb_detailAddr = $('#mb_detailAddr').val().trim();
 		let mb_phone = $('#mb_phone').val().trim();
 		let mb_birth = $('#mb_birth').val().trim();
-		let mb_gender = $('input[name=mb_gender]:checked').val().trim();
+		let mb_gender = $('input[name=mb_gender]:checked').val();
 		
 		//console.log($('input[type=submit]'));
 		//console.log($('input[type=submit]'));
@@ -240,10 +243,11 @@ $(document).ready(function(){
 			$('#idErrMsg').text("아이디를 입력하세요");
 			$('#idErrMsg').css('color','red');
 			$('#mb_id').focus();
-		} else if (mb_pw == ''){
+		} else if (mb_pw == '' || pwValidate !=0){
 			$('#pwErrMsg').text("비밀번호를 입력하세요");
 			$('#pwErrMsg').css('color','red');
 			$('#mb_pw').focus();
+			$('#mb_pw').select();  //패스워드 상자안의 글자 전체 선택
 		} else if (mb_name == ''){
 			$('#nameErrMsg').text("이름을 입력하세요");
 			$('#nameErrMsg').css('color','red');

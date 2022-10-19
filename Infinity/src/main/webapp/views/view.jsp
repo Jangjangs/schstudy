@@ -93,8 +93,18 @@
 							</div>
 							<div class="row">
 								<div class="col-sm-4 col-sm-offset-8">
+								
+								<!-- 글쓴아이디와 로그인된 아이디가 같을 경우 글수정과 글삭제버튼 노출 -->
+								<!-- 글쓴아이디와 로그인된 아이디가 다를 경우 글수정과 삭제버튼이 안보임 -->
+								<%-- <%=sess_id %>/<%=view.get("bo_mb_id") %> --%>
+								<%
+								if(sess_id.equals(view.get("bo_mb_id"))){
+								%>
 									<a href="modify.jsp?bo_num=<%=view.get("bo_num") %>" class="btn btn-success">글수정</a>
 									<a href="javascript:void(0);" class="btn btn-success" onclick="del()">글삭제</a>
+									<%
+								}
+									%>
 									<a href="list.jsp" class="btn btn-success">글목록</a>
 								</div>
 							</div>
