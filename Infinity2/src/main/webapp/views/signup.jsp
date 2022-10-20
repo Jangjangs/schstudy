@@ -4,7 +4,7 @@
 		
 <div class="simple-page-form animated flipInY" id="signup-form">
 	<h4 class="form-title m-b-xl text-center">Sign Up For a new Account</h4>
-	<form method="post" action="signupAct.jsp">
+	<form method="post" action="">
 	
 		<div class="form-group">
 			<input id="mb_id" type="text" name="mb_id" class="form-control" placeholder="아이디">
@@ -223,7 +223,6 @@ $(document).ready(function(){
 	
 	$('input[type=submit]').on("click", function(e){
 		e.preventDefault();
-		console.log(pwValidate);
 		
 		let mb_id = $('#mb_id').val().trim();
 		let mb_pw = $('#mb_pw').val().trim();
@@ -257,34 +256,9 @@ $(document).ready(function(){
 			//$(this).addClass("disabled");
 			//$(this).attr("disabled","disabled");  html
 			$(this).prop("disabled", true);   //Javascript
-			$.ajax({
-	            type : "POST",            // HTTP method type(GET, POST) 형식이다.
-	            url : "../ajax/ajax.signupAct.jsp",      // 컨트롤러에서 대기중인 URL 주소이다.
-	            data : {mb_id:mb_id,
-	            	mb_pw:mb_pw,
-	            	mb_name:mb_name,
-	            	mb_email:mb_email,
-	    			mb_zipcode:mb_zipcode,
-	    			mb_addr:mb_addr, 
-	    			mb_detailAddr:mb_detailAddr, 
-	    			mb_phone:mb_phone,
-	    			mb_birth:mb_birth,
-	    			mb_gender:mb_gender},            // Json 형식의 데이터이다.
-	    			
-	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-	                // 응답코드 > 0000
-	                if(res == 'Success'){
-	                	location.href="login.jsp"
-	                } else{
-	                	$(this).prop("disabled", false);
-	                	alert("회원가입 실패");
-	                }
-	               //console.log("["+res+"]");
-	            },
-	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-	                console.log("통신 실패.")
-	            }
-	        });
+			
+			$('form').submit();
+			
 		}
 		
 	});

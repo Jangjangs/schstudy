@@ -114,7 +114,7 @@ if(total%pageRow == 0){
 						</div>
 						
 						<div class="btn-group" role="group" style="margin-left:1rem;">
-							<a href="write.jsp" class="btn btn-default">글쓰기</a>
+							<a href="Write" class="btn btn-default">글쓰기</a>
 						</div>
 					</div>
 				</div>

@@ -90,5 +90,5 @@ public class MemberVO {
 	public void setMb_out(String mb_out) {
 		this.mb_out = mb_out;
 	}
-
+	
 }

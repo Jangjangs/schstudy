@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.MemberVO;
-import service.LoginServiceImpl;
+import model.BoardVO;
+import service.BoardServiceImpl;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Write
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Write")
+public class Write extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Write() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,33 +32,32 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/write.jsp");
 		dispatcher.forward(request, response);
-		//=request.getRequestDispatcher("/views/login.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MemberVO vo = new MemberVO();
-		vo.setMb_id(request.getParameter("mb_id"));
-		vo.setMb_pw(request.getParameter("mb_pw"));
-	
-		//System.out.println(vo);
+		 request.setCharacterEncoding("UTF-8");
+		 response.setContentType("text/html; charset=UTF-8");
+		 
+		 HttpSession session = request.getSession();
+		 
+		 BoardVO vo = new BoardVO();
+		 vo.setBo_category(request.getParameter("bo_category"));
+		 vo.setBo_title(request.getParameter("bo_title"));
+		 vo.setBo_content(request.getParameter("bo_content"));
+		 vo.setBo_mb_id((String) session.getAttribute("sess_id"));
+		 vo.setBo_mb_name((String) session.getAttribute("sess_name"));
+		 vo.setBo_ip(request.getRemoteAddr());
+		// System.out.println(vo);
+		 
+		BoardServiceImpl service = new BoardServiceImpl();
+		service.create(vo);
 		
-		LoginServiceImpl service = new LoginServiceImpl();
-		MemberVO member = service.read(vo);
-		
-		if(member != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("sess_id", member.getMb_id());
-			session.setAttribute("sess_name", member.getMb_name());
-			
-			response.sendRedirect("/Main");
-		} else {
-			response.sendRedirect("/Login");
-		}
+		response.sendRedirect("/List");
 	}
 
 }
