@@ -100,7 +100,7 @@
 								<%
 								if(sess_id.equals(view.get("bo_mb_id"))){
 								%>
-									<a href="modify.jsp?bo_num=<%=view.get("bo_num") %>" class="btn btn-success">글수정</a>
+									<a href="Modify?bo_num=<%=view.get("bo_num") %>" class="btn btn-success">글수정</a>
 									<a href="javascript:void(0);" class="btn btn-success" onclick="del()">글삭제</a>
 									<%
 								}

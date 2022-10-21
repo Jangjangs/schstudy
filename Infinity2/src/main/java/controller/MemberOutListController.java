@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,17 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.MemberVO;
+import service.MemberServiceImpl;
+
 /**
  * Servlet implementation class MemberOutList
  */
 @WebServlet("/MemberOutList")
-public class MemberOutList extends HttpServlet {
+public class MemberOutListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberOutList() {
+    public MemberOutListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,6 +32,14 @@ public class MemberOutList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String keyword = request.getParameter("keyword");
+		//System.out.println(keyword);
+		MemberServiceImpl service = new MemberServiceImpl();
+		List<MemberVO> list = service.readOut(keyword);
+		
+		request.setAttribute("list", list);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/memberOutList.jsp");
 		dispatcher.forward(request, response);
 	}

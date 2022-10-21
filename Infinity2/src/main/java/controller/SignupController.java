@@ -17,13 +17,13 @@ import service.MemberServiceImpl;
  * Servlet implementation class Signup
  */
 @WebServlet("/Signup")
-public class Signup extends HttpServlet {
+public class SignupController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Signup() {
+    public SignupController() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -1,3 +1,4 @@
+<%@page import="model.MemberVO"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.*"%>
 
@@ -5,54 +6,7 @@
     pageEncoding="UTF-8"%>
 
 <%
-//회원목록 DB에서 불러오기
-
-//JDBC프로그래밍					   
-String url="jdbc:mysql://localhost:3306/bigdata?serverTimezone=UTC";
-String user="root";
-String password="bigdata";
-
-StringBuffer qry = new StringBuffer();
-qry.append(" SELECT * FROM big_member WHERE mb_out='N'  ORDER BY mb_joindate DESC ");
-String sql = qry.toString();
-
-Connection conn = null;
-PreparedStatement stmt = null;
-ResultSet rs = null;
-
-List<HashMap<String, String>> list = new ArrayList<>();
-
-try{
-	Class.forName("com.mysql.cj.jdbc.Driver");
-	conn = DriverManager.getConnection(url, user, password);
-	
-	stmt = conn.prepareStatement(sql);
-	
-	rs = stmt.executeQuery();
-	
-	while(rs.next()){
-		HashMap<String, String> hm = new HashMap<String, String>();
-		hm.put("mb_id", rs.getString("mb_id"));
-		hm.put("mb_name", rs.getString("mb_name"));
-		hm.put("mb_email", rs.getString("mb_email"));
-		hm.put("mb_phone", rs.getString("mb_phone"));
-		hm.put("mb_birth", rs.getString("mb_birth"));
-		hm.put("mb_gender", rs.getString("mb_gender"));
-		hm.put("mb_joindate", rs.getString("mb_joindate"));
-		
-		list.add(hm);
-	}
-}catch(Exception e){
-	
-}finally{ //오류가 나도 반드시 실행
-	try{
-		if(rs != null) rs.close();
-		if(stmt != null) stmt.close();
-		if(conn != null) conn.close();
-	}catch(Exception e){
-		
-	}
-}
+List<MemberVO> list =(List<MemberVO>) request.getAttribute("list");
 %>
 
 <%@ include file="includes/header.jsp" %>
@@ -85,21 +39,21 @@ try{
 <%
 int num = 1;
 
-	Iterator<HashMap<String, String>> it = list.iterator();
+	Iterator<MemberVO> it = list.iterator();
 	while(it.hasNext()){
-		HashMap<String, String> data = it.next();
+		MemberVO data = it.next();
 	
 %>
 							<tr>
 								<td><%=num++ %></td>
-								<td><%=data.get("mb_id") %></td>
-								<td><%=data.get("mb_name") %></td>
-								<td><%=data.get("mb_email") %></td>
-								<td><%=data.get("mb_phone") %></td>
-								<td><%=data.get("mb_birth") %></td>
-								<td><%=data.get("mb_gender") %></td>
-								<td><%=data.get("mb_joindate") %></td>
-								<td><button data-mb_id="<%=data.get("mb_id") %>" class="btn">탈퇴</button></td>
+								<td><%=data.getMb_id() %></td>
+								<td><%=data.getMb_name() %></td>
+								<td><%=data.getMb_email() %></td>
+								<td><%=data.getMb_phone() %></td>
+								<td><%=data.getMb_birth() %></td>
+								<td><%=data.getMb_gender() %></td>
+								<td><%=data.getMb_joindate() %></td>
+								<td><button data-mb_id="<%=data.getMb_id() %>" class="btn">탈퇴</button></td>
 							</tr>
 <%
 	}						

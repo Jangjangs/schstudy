@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Main
+ * Servlet implementation class Logout
  */
-@WebServlet("/Main")
-public class Main extends HttpServlet {
+@WebServlet("/Logout")
+public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Main() {
+    public LogoutController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +28,8 @@ public class Main extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/dashboard.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/logout.jsp");
 		dispatcher.forward(request, response);
-		
 	}
 
 	/**

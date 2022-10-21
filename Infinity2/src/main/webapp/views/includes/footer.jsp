@@ -41,10 +41,10 @@
 	function autoSessionClose(){
 		//document.getElementById('layer').style.display = 'block';
 		alert("세션 만료");
-		location.href="logout.jsp"
+		location.href="Logout"
 		
 	}
-	setTimeout(autoSessionClose, 1000*60*30);
+	setTimeout(autoSessionClose, 1000*60*60);
 	</script>
 </body>
 </html>

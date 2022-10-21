@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Profile
+ * Servlet implementation class Main
  */
-@WebServlet("/Profile")
-public class Profile extends HttpServlet {
+@WebServlet("/Main")
+public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Profile() {
+    public MainController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,8 +28,9 @@ public class Profile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/profile.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/dashboard.jsp");
 		dispatcher.forward(request, response);
+		
 	}
 
 	/**

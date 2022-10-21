@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="1;url=views/login.jsp">
+<meta http-equiv="refresh" content="1;url=Login">
 <title>Insert title here</title>
 <script>
 //페이지 이동

@@ -8,18 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.MemberVO;
+import service.LoginServiceImpl;
 
 /**
- * Servlet implementation class List
+ * Servlet implementation class Login
  */
-@WebServlet("/List")
-public class List extends HttpServlet {
+@WebServlet("/Login")
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public List() {
+    public LoginController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,16 +32,33 @@ public class List extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/login.jsp");
 		dispatcher.forward(request, response);
+		//=request.getRequestDispatcher("/views/login.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		MemberVO vo = new MemberVO();
+		vo.setMb_id(request.getParameter("mb_id"));
+		vo.setMb_pw(request.getParameter("mb_pw"));
+	
+		//System.out.println(vo);
+		
+		LoginServiceImpl service = new LoginServiceImpl();
+		MemberVO member = service.read(vo);
+		
+		if(member != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("sess_id", member.getMb_id());
+			session.setAttribute("sess_name", member.getMb_name());
+			
+			response.sendRedirect("/Main");
+		} else {
+			response.sendRedirect("/Login");
+		}
 	}
 
 }

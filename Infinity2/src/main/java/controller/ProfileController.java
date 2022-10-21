@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Gallery
+ * Servlet implementation class Profile
  */
-@WebServlet("/Gallery")
-public class Gallery extends HttpServlet {
+@WebServlet("/Profile")
+public class ProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Gallery() {
+    public ProfileController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class Gallery extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/gallery.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/profile.jsp");
 		dispatcher.forward(request, response);
 	}
 

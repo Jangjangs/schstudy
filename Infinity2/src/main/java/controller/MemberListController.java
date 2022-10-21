@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,22 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.BoardVO;
-import service.BoardServiceImpl;
+import model.MemberVO;
+import service.MemberServiceImpl;
 
 /**
- * Servlet implementation class Write
+ * Servlet implementation class MemberList
  */
-@WebServlet("/Write")
-public class Write extends HttpServlet {
+@WebServlet("/MemberList")
+public class MemberListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Write() {
+    public MemberListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +32,12 @@ public class Write extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/write.jsp");
+		
+		MemberServiceImpl service = new MemberServiceImpl();
+		List<MemberVO> list = service.read();
+		request.setAttribute("list", list);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("views/memberList.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -40,24 +45,8 @@ public class Write extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 request.setCharacterEncoding("UTF-8");
-		 response.setContentType("text/html; charset=UTF-8");
-		 
-		 HttpSession session = request.getSession();
-		 
-		 BoardVO vo = new BoardVO();
-		 vo.setBo_category(request.getParameter("bo_category"));
-		 vo.setBo_title(request.getParameter("bo_title"));
-		 vo.setBo_content(request.getParameter("bo_content"));
-		 vo.setBo_mb_id((String) session.getAttribute("sess_id"));
-		 vo.setBo_mb_name((String) session.getAttribute("sess_name"));
-		 vo.setBo_ip(request.getRemoteAddr());
-		// System.out.println(vo);
-		 
-		BoardServiceImpl service = new BoardServiceImpl();
-		service.create(vo);
-		
-		response.sendRedirect("/List");
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
