@@ -14,4 +14,8 @@ public interface BoardService {
 	public List<BoardVO> readWithPaging(PagingDTO dto);
 	
 	public int totalCnt();
+	
+	public BoardVO read(int bo_num);
+	
+	public BoardVO readModify(int bo_num);
 }

@@ -1,48 +1,10 @@
+<%@page import="model.MemberVO"%>
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- <%=session.getAttribute("sess_id") %> --%>
 <%
-//프로파일에 아이디에 맞는 이름 출력
-String mb_name = "";
-//JDBC프로그래밍
-String url="jdbc:mysql://localhost:3306/bigdata?serverTimezone=UTC";
-String user="root";
-String password="bigdata";
-
-StringBuffer qry = new StringBuffer();
-qry.append(" SELECT * FROM big_member WHERE mb_id = ? ");
-String sql = qry.toString();
-
-Connection conn = null;
-PreparedStatement stmt = null;
-ResultSet rs = null;
-try {
-	Class.forName("com.mysql.cj.jdbc.Driver");
-	conn = DriverManager.getConnection(url, user, password);
-	
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, (String)session.getAttribute("sess_id"));
-	rs = stmt.executeQuery(); //ResultSet 값 리턴 
-	
-	if(rs.next()){
-		mb_name = rs.getString("mb_name");
-		
-	} else{
-		response.sendRedirect("login.jsp");
-	}
-} catch (Exception e){
-	
-}finally{
-	try{
-		if(rs != null) rs.close();
-		if(stmt != null) stmt.close();
-		if(conn != null) conn.close();
-	}catch(Exception e){
-		
-	}
-}
-
+MemberVO member =(MemberVO) request.getAttribute("profile");
 %>
 <%@ include file="includes/header.jsp" %>
 
@@ -65,7 +27,7 @@ try {
 			</div>
 		</div>
 		<div class="text-center">
-			<h4 class="profile-info-name m-b-lg"><a href="javascript:void(0)" class="title-color"><%=mb_name %></a></h4>
+			<h4 class="profile-info-name m-b-lg"><a href="javascript:void(0)" class="title-color"><%=member.getMb_name() %></a></h4>
 			<div>
 				<a href="javascript:void(0)" class="m-r-xl theme-color"><i class="fa fa-bolt m-r-xs"></i> Web Developer</a>
 				<a href="javascript:void(0)" class="theme-color"><i class="fa fa-map-marker m-r-xs"></i>Cairo, Egypt</a>

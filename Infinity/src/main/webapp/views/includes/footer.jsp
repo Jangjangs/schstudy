@@ -44,7 +44,7 @@
 		location.href="logout.jsp"
 		
 	}
-	setTimeout(autoSessionClose, 1000*60*30);
+	setTimeout(autoSessionClose, 1000*60*60);
 	</script>
 </body>
 </html>

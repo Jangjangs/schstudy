@@ -24,7 +24,7 @@
 							<td>1</td>
 							<td><input class="form-control"></td>
 							<td><input class="form-control"></td>
-							<td><button type="button" id="" class="btn btn-default" onclick="addItem()">+</button>
+							<td><button type="button" id="" class="btn btn-default" onclick="addItem(this)">+</button>
 							<button type="button" id="" class="btn btn-default" onclick="delItem(this)">-</button></td>
 						</tr>
 						
@@ -35,6 +35,7 @@
 	</div><!-- END column -->
 <script type="text/javascript">
 	function delItem(t){
+		
 		if($('#crew tr').length > 2){
 			$(t).parent().parent().remove();
 		} else{
@@ -42,7 +43,11 @@
 		}
 		
 	}
-	function addItem(){
+	function addItem(t){
+		
+		//자신삭제
+		$(t).parent().empty();
+		
 		let len = $('#crew tr').length;
 		console.log(len);
 		
@@ -51,7 +56,7 @@
 		html += '<td>'+len+'</td>';
 		html += '<td><input class="form-control"></td>';
 		html += '<td><input class="form-control"></td>';
-		html += '<td><button type="button" id="" class="btn btn-default" onclick="addItem()">+</button>';
+		html += '<td><button type="button" id="" class="btn btn-default" onclick="addItem(this)">+</button>';
 		html += '<button type="button" id="" class="btn btn-default" onclick="delItem(this)">-</button></td>';
 		html += '</tr>';
 		

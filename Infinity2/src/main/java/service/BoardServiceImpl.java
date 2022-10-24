@@ -23,13 +23,25 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> readWithPaging(PagingDTO dto) {
 		BoardMapper mapper = new BoardMapper();
-		 return  mapper.readWithPaging(dto);
+		return  mapper.readWithPaging(dto);
 	}
 
 	@Override
 	public int totalCnt() {
 		BoardMapper mapper = new BoardMapper();
-		 return  mapper.totalCnt();
+		return  mapper.totalCnt();
+	}
+
+	@Override
+	public BoardVO read(int bo_num) {
+		BoardMapper mapper = new BoardMapper();
+		return  mapper.read(bo_num);
+	}
+
+	@Override
+	public BoardVO readModify(int bo_num) {
+		BoardMapper mapper = new BoardMapper();
+		return  mapper.read(bo_num);
 	}
 	
 	
