@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
+</head>
+
+<body class="page07">
+    <div class="jointit w100 tC"><b>회원가입</b></div>
+
+    <div class="pd16">
+	<form method="post" action="join03.jsp" onsubmit="return formChk();"> 
+	<input type="hidden" name="phone" id="phone" value="">
+        <div>
+            <h4>이름</h4>
+            <input type="text" name="uname" id="uname" class="" value="">
+        </div>
+
+        <div>
+            <h4>학교</h4>
+            <input type="text" name="school" id="school" class="" value="">
+        </div>
+
+        <div>
+            <h4>학년/반</h4>
+            <input type="text" name="className" id="className" class="" value="">
+        </div>
+
+        <div class="pnum">
+            <div><h4 class="inline">휴대폰번호</h4> <span>(※휴대폰 번호가 ID로 설정됩니다.)</span></div>
+            <input type="text" name="" id="phone1" class="" value="" maxlength='3' onkeyup="nextEle(this, 3, 'phone2')"> - 
+            <input type="text" name="" id="phone2" class="" value="" maxlength='4' onkeyup="nextEle(this, 4, 'phone3')"> - 
+            <input type="text" name="" id="phone3" class="" value="" maxlength='4'onkeyup="nextEle(this, 4, 'upw')">
+        </div>
+
+        <div>
+            <h4 class="inline">비밀번호</h4> <span>(※최대 12자리)</span>
+            <input type="password" maxlength='12' name="upw" id="upw" class="" value="">
+        </div>
+
+        <div>
+            <h4>비밀번호 확인</h4>
+            <input type="password" maxlength='12' name="" id="upwChk" class="" value="">
+        </div>
+
+       <div>
+	    <h4>노선</h4>
+	    <div class="sltbox">
+	        <select name="line" id="line" class="" onchange="lineChg();">
+	        	<option value="non">노선을 선택하세요</option>
+	            <option value="A노선">A노선</option>
+	            <option value="B노선">B노선</option>
+	            <option value="C노선">C노선</option>
+	        </select>
+	    </div>
+	</div>
+	
+	<div>
+	    <h4 class="inline">탑승장소</h4> <span>(※노선을 먼저 선택해주세요)</span>
+	    <div class="sltbox">
+	        <select name="loc" id="loc" class="">
+	        <option value="">노선을 먼저 선택해주세요</option>
+	        </select>
+	    </div>
+	</div>
+        
+        <div class="jw100 tC">
+            <button type="submit">가입하기</a></button>
+        </div>
+        </form>
+    </div>
+    <script>
+    function nextEle(t, cnt, ele){
+    	if(t.value.length == cnt){
+    		document.getElementById(ele).focus();
+    	}
+    }
+    function formChk(){
+    		/* console.log(document.getElementById('phone1').value.length) */
+    		if(document.getElementById('uname').value==''){
+    			alert("이름을 입력하세요.");
+    			document.getElementById('name').focus();
+    			return false;
+    		}
+    		if(document.getElementById('school').value==''){
+    			alert("학교명을 입력하세요.");
+    			document.getElementById('school').focus();
+    			return false;
+    		}
+    		if(document.getElementById('className').value==''){
+    			alert("학년/반을 입력하세요.");
+    			document.getElementById('className').focus();
+    			return false;
+    		}
+    		if(document.getElementById('phone1').value=='' 
+    				|| document.getElementById('phone1').value.length != 3){
+    			alert("전화번호를 입력하세요.");
+    			document.getElementById('phone1').focus();
+    			return false;
+    		}
+    		if(document.getElementById('phone2').value=='' 
+				|| document.getElementById('phone2').value.length != 4){
+			alert("전화번호를 입력하세요.");
+			document.getElementById('phone2').focus();
+			return false;
+		}
+    		if(document.getElementById('phone3').value=='' 
+				|| document.getElementById('phone3').value.length != 4){
+			alert("전화번호를 입력하세요.");
+			document.getElementById('phone3').focus();
+			return false;
+		}
+    	
+    	
+    	if(document.getElementById('upw').value=='' 
+			|| document.getElementById('upw').value.length < 4){
+		alert("비밀번호를 입력하세요.4~12글자");
+		document.getElementById('upw').focus();
+		return false;
+		}
+    	if(document.getElementById('upw').value != document.getElementById('upwChk').value){
+		alert("비밀번호가 일치하지 않습니다.");
+		document.getElementById('upw').focus();
+		document.getElementById('upwChk').value = '';
+		return false;
+		}
+    	if(document.getElementById('line').value=='non'){
+    		alert("노선을 선택하세요.");
+    		document.getElementById('line').focus();
+    		return false;
+    	}
+    	
+    	
+    	document.getElementById('phone').value =document.getElementById('phone1').value+document.getElementById('phone2').value+document.getElementById('phone3').value;	
+		/* console.log("전송버튼"+uname); */
+		return false;  
+   	}
+	function lineChg(){
+		let listSel = document.getElementById('loc');
+		let itemLi ="";
+		let line = [ ['A-1','A-2','A-3'],
+					 ['B-1','B-2','B-3','B-4','B-5','B-6'],
+		 			 ['C-1','C-2','C-3'] ];
+		let selIdx = document.getElementById('line').selectedIndex;
+		console.log("change"+selIdx);
+		if(selIdx !=0){
+			for(let i = 0 ; i < line[selIdx-1].length; i++){
+			itemLi += "<option value='"+line[selIdx-1][i]+"'>"+line[selIdx-1][i]+"</option>";
+			}
+		} else {
+			itemLi += "<option value=''>노선을 먼저 선택해주세요</option>";
+		}
+		
+		//itemLi += "<option value='"+line[selIdx-1][1]+"'>"+line[selIdx-1][1]+"</option>";
+		//itemLi += "<option value='"+line[selIdx-1][2]+"'>"+line[selIdx-1][2]+"</option>";
+			
+		listSel.innerHTML = itemLi;
+		
+		
+				
+	}
+    </script>
+</body>
+</html>

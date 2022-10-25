@@ -1,3 +1,6 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="model.CommentVO"%>
+<%@page import="java.util.List"%>
 <%@page import="model.BoardVO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.*"%>
@@ -5,6 +8,7 @@
     pageEncoding="UTF-8"%>
 <%
 BoardVO view = (BoardVO) request.getAttribute("view");  
+List<CommentVO> list = (List<CommentVO>) request.getAttribute("list");  
 %>
   <%@ include file="includes/header.jsp" %>
   
@@ -64,6 +68,50 @@ BoardVO view = (BoardVO) request.getAttribute("view");
 								</div>
 							</div>
 						</form>
+						
+						<!--  댓글 시작 -->
+						<div>
+							<h4 class="widget-title">댓글</h4>
+							<form method="post" action="">
+							<input type="hidden" name="com_refnum" value="<%=view.getBo_num() %>">
+								<div class="form-group">
+									<input type="text" name="com_content" id="com_content" class="form-control" required="required">
+										<div style="text-align:right">
+											<button id="btn_comment" class="btn btn-default">입력</button>
+										</div>
+								</div>
+							</form>
+						</div>
+						
+						<!-- 댓글목록 -->
+						<div id="commentList">
+<%
+String Chk = "false";
+Iterator<CommentVO> it = list.iterator();
+while(it.hasNext()){
+	CommentVO data = it.next();
+%>						
+						
+							<div>
+								<div><%=data.getCom_mb_name() %> <%=data.getCom_inputdate() %></div>						
+								<div><%=data.getCom_content() %></div>						
+							</div>
+							<hr>
+<%
+Chk = "true";
+}
+
+if("false".equals(Chk)){
+%>
+							
+							<div>
+								<div>등록된 댓글이 없습니다.</div>
+							</div>
+<%
+}
+%>
+						</div>
+						<!-- 댓글목록 끝-->
 					</div><!-- .widget-body -->
 				</div><!-- .widget -->
 			</div><!-- END column -->

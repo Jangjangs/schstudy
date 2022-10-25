@@ -4,7 +4,9 @@ import java.util.List;
 
 import mapper.BoardMapper;
 import model.BoardVO;
+import model.CommentVO;
 import model.PagingDTO;
+import model.ViewInfoVO;
 
 public class BoardServiceImpl implements BoardService {
 
@@ -42,6 +44,16 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO readModify(int bo_num) {
 		BoardMapper mapper = new BoardMapper();
 		return  mapper.read(bo_num);
+	}
+
+	@Override
+	public ViewInfoVO view(int bo_num) {
+		BoardVO board = new BoardMapper().read(bo_num);
+		List<CommentVO> list = new CommentServiceImpl().read(bo_num);
+		ViewInfoVO info = new ViewInfoVO();
+		info.setBoard(board);
+		info.setList(list);
+		return info;
 	}
 	
 	

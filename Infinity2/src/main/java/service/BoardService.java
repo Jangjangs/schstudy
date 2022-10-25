@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.BoardVO;
 import model.PagingDTO;
+import model.ViewInfoVO;
 
 public interface BoardService {
 
@@ -18,4 +19,6 @@ public interface BoardService {
 	public BoardVO read(int bo_num);
 	
 	public BoardVO readModify(int bo_num);
+	
+	public ViewInfoVO view(int bo_num);
 }

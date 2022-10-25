@@ -5,7 +5,7 @@
   	<div class="wrap">
 		<div class="widget">
 			<header class="widget-header">
-				<h4 class="widget-title">글수정</h4>
+				<h4 class="widget-title">제이쿼리</h4>
 			</header><!-- .widget-header -->
 			<hr class="widget-separator">
 			<div class="widget-body">
@@ -35,9 +35,15 @@
 	</div><!-- END column -->
 <script type="text/javascript">
 	function delItem(t){
-		
-		if($('#crew tr').length > 2){
+		len =$('#crew tr').length;
+		if(len > 2){
 			$(t).parent().parent().remove();
+			let html = "";
+			html += '<button type="button" id="" class="btn btn-default" onclick="addItem(this)">+</button>';
+			html += '<button type="button" id="" class="btn btn-default" onclick="delItem(this)">-</button>';
+			
+			console.log(len);
+			$("#crew > tbody > tr:nth-child("+(len-1)+") > td:nth-child(4)").append(html);
 		} else{
 			alert('더 이상 지울수없습니다.');
 		}

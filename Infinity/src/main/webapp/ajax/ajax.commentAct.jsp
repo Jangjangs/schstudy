@@ -1,3 +1,4 @@
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.sql.DriverManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -52,10 +53,10 @@
  
 //원래는 JSON데이터로보내야되는데
 //out.print(ajaxMessage);
-out.print("<div>");
-out.print("<div>"+ session.getAttribute("sess_name") +" </div>");						
-out.print("<div>"+ request.getParameter("com_content") +"</div>");						
-out.print("</div>");
-out.print("<hr>");
+//{"res":"Success", "sql":""}
+JSONObject obj = new JSONObject();	//{오브젝트 생성}
+obj.put("res", ajaxMessage);	//{"res":"Success"}
+obj.put("sql", sql);	//{"res":"Success","sql":"INSERT문"}
+out.print(obj);
 %>
 
