@@ -1,19 +1,26 @@
 package controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import model.TradingDetailVO;
 import model.TradingVO;
+import service.TradingDetailServiceImpl;
 import service.TradingServiceImpl;
 
 /**
  * Servlet implementation class TradingController
  */
-@WebServlet("/TradingStatementWrite")
+@WebServlet("/TradingWrite")
 public class TradingWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,28 +58,45 @@ public class TradingWriteController extends HttpServlet {
 		
 		//목요일
 		for(int i = 0 ; i < request.getParameterValues("tradingDate").length ; i++) {
-			String tradingDate = request.getParameterValues("tradingDate")[i];
+			String tradingDatestr = request.getParameterValues("tradingDate")[i];
 			String subject = request.getParameterValues("subject")[i];
 			String standard = request.getParameterValues("standard")[i];
 			String quantity = request.getParameterValues("quantity")[i];
 			String unitPrice = request.getParameterValues("unitPrice")[i];
-			String supplyPirce = request.getParameterValues("supplyPirce")[i];
+			String supplyPrice = request.getParameterValues("supplyPrice")[i];
 			String taxAmount = request.getParameterValues("taxAmount")[i];
 			String note = request.getParameterValues("note")[i];
 			
-			if(tradingDate ==null || "".equals(tradingDate)) {
+			if(tradingDatestr ==null || "".equals(tradingDatestr)) {
 				break;
 			} 
-			System.out.println(tradingDate);
-			System.out.println(subject);
-			System.out.println(standard);
-			System.out.println(quantity);
-			System.out.println(unitPrice);
-			System.out.println(supplyPirce);
-			System.out.println(taxAmount);
-			System.out.println(note);
 			
+			Date tradingDate = null;
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				tradingDate = format.parse(tradingDatestr);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			TradingDetailVO tradingDetail = new TradingDetailVO();
+			tradingDetail.setTrad_refnum(tra_num);
+			tradingDetail.setTrad_tradingDate(tradingDate);
+			tradingDetail.setTrad_subject(subject);
+			tradingDetail.setTrad_standard(standard);
+			tradingDetail.setTrad_quantity(Integer.parseInt(quantity));
+			tradingDetail.setTrad_unitPrice(Integer.parseInt(unitPrice));
+			tradingDetail.setTrad_supplyPrice(Integer.parseInt(supplyPrice));
+			tradingDetail.setTrad_taxAmount(Integer.parseInt(taxAmount));
+			tradingDetail.setTrad_note(note);
+			
+			TradingDetailServiceImpl service2 = new TradingDetailServiceImpl();
+			service2.create(tradingDetail);
+			System.out.print(tradingDetail);
 		}
+		
+		response.sendRedirect("TradingList");
+		
 	}
 
 }

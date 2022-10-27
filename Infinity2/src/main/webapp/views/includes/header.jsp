@@ -256,9 +256,11 @@ if((sess_id == null || "".equals(sess_id))){
           </a>
           <ul class="submenu">
             <li><a href="Slide"><span class="menu-text">제이쿼리</span></a></li>
+            <li><a href="TradingList"><span class="menu-text">거래명세서</span></a></li>
           </ul>
           </li>
-    
+          
+          
       </ul><!-- .app-menu -->
     </div><!-- .menubar-scroll-inner -->
   </div><!-- .menubar-scroll -->

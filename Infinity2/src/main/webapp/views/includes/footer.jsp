@@ -44,7 +44,7 @@
 		location.href="Logout"
 		
 	}
-	setTimeout(autoSessionClose, 1000*60*60);
+	setTimeout(autoSessionClose, 1000*60*120);
 	</script>
 </body>
 </html>

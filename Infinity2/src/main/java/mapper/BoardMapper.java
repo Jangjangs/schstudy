@@ -94,8 +94,6 @@ public class BoardMapper {
 	}
 	
 	public List<BoardVO> readWithPaging(PagingDTO dto){
-		
-
 	
 		StringBuffer qry = new StringBuffer();
 		qry.append(" SELECT * FROM big_board ORDER BY bo_num DESC LIMIT " + dto.startPage()+","+dto.getPageRow());

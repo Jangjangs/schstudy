@@ -5,7 +5,7 @@
   	<div class="wrap">
 		<div class="widget">
 			<header class="widget-header">
-				<h4 class="widget-title">제이쿼리</h4>
+				<h4 class="widget-title">거래명세서</h4>
 			</header><!-- .widget-header -->
 			<hr class="widget-separator">
 			<div class="widget-body">
@@ -28,7 +28,7 @@
 							<td><input type="text" name="standard" id="standard0" class="form-control"></td>
 							<td><input type="text" name="quantity" id="quantity0" class="form-control"></td>
 							<td><input type="text" name="unitPrice" id="unitPrice0" class="form-control"></td>
-							<td><input type="text" name="supplyPirce" id="supplyPirce0" class="form-control"></td>
+							<td><input type="text" name="supplyPrice" id="supplyPrice0" class="form-control"></td>
 							<td><input type="text" name="taxAmount" id="taxAmount0" class="form-control"></td>
 							<td><input type="text" name="note" id="note0" class="form-control"></td>
 							<td><button type="button" id="" class="btn btn-default" onclick="addItem(this)">+</button>
@@ -72,7 +72,7 @@
 		html += '<td><input type="text" name="standard" id="standard'+len+'" class="form-control"></td>';
 		html += '<td><input type="text" name="quantity" id="quantity'+len+'" class="form-control"></td>';
 		html += '<td><input type="text" name="unitPrice" id="unitPrice'+len+'" class="form-control"></td>';
-		html += '<td><input type="text" name="supplyPirce" id="supplyPirce'+len+'" class="form-control"></td>';
+		html += '<td><input type="text" name="supplyPrice" id="supplyPrice'+len+'" class="form-control"></td>';
 		html += '<td><input type="text" name="taxAmount" id="taxAmount'+len+'" class="form-control"></td>';
 		html += '<td><input type="text" name="note" id="note'+len+'" class="form-control"></td>';
 		html += '<td><button type="button" id="" class="btn btn-default" onclick="addItem(this)">+</button>';

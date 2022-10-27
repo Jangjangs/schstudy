@@ -3,28 +3,28 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.BoardVO;
-import model.PagingDTO;
-import service.BoardServiceImpl;
+import model.TradingDetailVO;
+import model.TradingVO;
+import service.TradingDetailServiceImpl;
+import service.TradingServiceImpl;
 
 /**
- * Servlet implementation class List
+ * Servlet implementation class TradingViewController
  */
-@WebServlet("/List")
-public class ListController extends HttpServlet {
+@WebServlet("/TradingView")
+public class TradingViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListController() {
+    public TradingViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,35 +33,24 @@ public class ListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//페이징
-		String param= request.getParameter("p");
+		TradingServiceImpl service = new TradingServiceImpl();
+		TradingVO trading = service.read(Integer.parseInt(request.getParameter("tra_num")));
+		request.setAttribute("trading", trading);
 		
-		PagingDTO paging = new PagingDTO();
-		if(!(param == null || "".equals(param))){
-			paging.setP(Integer.parseInt(param));
-		}
-		//System.out.println(paging);
+		TradingDetailServiceImpl service2 = new TradingDetailServiceImpl();
+		List<TradingDetailVO> list = service2.read(Integer.parseInt(request.getParameter("tra_num")));
 		
-		BoardServiceImpl service = new BoardServiceImpl();
-		//글목록
-		List<BoardVO> list = service.readWithPaging(paging);
-		//전체 글수
-		int total = service.totalCnt();
-		
-		paging.setTotal(total);
-		//페이징 끝
 		request.setAttribute("list", list);
-		request.setAttribute("paging", paging);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("views/list.jsp");
-		dispatcher.forward(request, response);
+		request.getRequestDispatcher("views/tradingStatementView.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
