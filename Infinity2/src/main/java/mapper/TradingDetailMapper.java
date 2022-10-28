@@ -92,6 +92,32 @@ public class TradingDetailMapper {
 		
 		return list;
 	}
+	
+	public void delete(int trad_refnum) {
+		 StringBuffer qry = new StringBuffer();
+		 qry.append(" DELETE FROM big_tradingdetail ");
+		 qry.append(" WHERE trad_refnum = ? ");
+		 String sql = qry.toString();
+		 //System.out.println(sql);
+		 Connection conn = null;
+		 PreparedStatement stmt = null;
+		 
+		 try{
+			 conn = DBUtil.getConnection();
+			 
+			 stmt = conn.prepareStatement(sql);
+			 stmt.setInt(1, trad_refnum);
+			 
+			 stmt.executeUpdate();
+			
+			 //System.out.println(stmt);
+		 } catch(Exception e){
+			 
+		 } finally{
+			 DBUtil.setClose(null, stmt, conn);
+		 }
+
+	}
 		
 }
 
