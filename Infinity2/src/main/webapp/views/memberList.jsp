@@ -4,10 +4,9 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%
-List<MemberVO> list =(List<MemberVO>) request.getAttribute("list");
-%>
 
 <%@ include file="includes/header.jsp" %>
   <div class="wrap">
@@ -36,39 +35,28 @@ List<MemberVO> list =(List<MemberVO>) request.getAttribute("list");
 								<th>가입 일자</th>
 								<th>관리</th>
 							</tr>
-<%
-int num = 1;
-
-	Iterator<MemberVO> it = list.iterator();
-	while(it.hasNext()){
-		MemberVO data = it.next();
-	
-%>
+<c:set var="num" value="1" />
+<c:forEach var="data" items="${list}">
 							<tr>
-								<td><%=num++ %></td>
-								<td><%=data.getMb_id() %></td>
-								<td><%=data.getMb_name() %></td>
-								<td><%=data.getMb_email() %></td>
-								<td><%=data.getMb_phone() %></td>
-								<td><%=data.getMb_birth() %></td>
-								<td><%=data.getMb_gender() %></td>
-								<td><%=data.getMb_joindate() %></td>
-								<td><button data-mb_id="<%=data.getMb_id() %>" class="btn">탈퇴</button></td>
+								<td><c:out value="${num}" /> <%//=num++ %></td>
+								<td><c:out value="${data.mb_id }" /><%//=data.getMb_id() %></td>
+								<td><c:out value="${data.mb_name }" /><%//=data.getMb_name() %></td>
+								<td><c:out value="${data.mb_email }" /><%//=data.getMb_email() %></td>
+								<td><c:out value="${data.mb_phone }" /><%//=data.getMb_phone() %></td>
+								<td><c:out value="${data.mb_birth }" /><%//=data.getMb_birth() %></td>
+								<td><c:out value="${data.mb_gender }" /><%//=data.getMb_gender() %></td>
+								<td><fmt:formatDate value="${data.mb_joindate }" /><%//=data.getMb_joindate() %></td>
+								<td><button data-mb_id="<c:out value="${data.mb_id }" /><%//=data.getMb_id() %>" class="btn">탈퇴</button></td>
 							</tr>
-<%
-	}						
-	
-	if(num == 1){
-		
-	
-%>
+<c:set var="num" value="${num+1 }"/>
+</c:forEach>
+<c:if test="${num eq 1 }">
 							<tr>
 								<td colspan="9">가입된 회원이 없습니다.</td>
 							</tr>
+</c:if>
 		
-<%
-	}
-%>					
+				
 						</table>
 					</div>
 				</div><!-- .widget -->

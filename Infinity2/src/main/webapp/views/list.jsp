@@ -4,12 +4,10 @@
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-List<BoardVO> list = (List<BoardVO>) request.getAttribute("list");
-PagingDTO paging = (PagingDTO) request.getAttribute("paging");
 
-%>
   <%@ include file="includes/header.jsp" %>
   
   <style>
@@ -22,11 +20,11 @@ PagingDTO paging = (PagingDTO) request.getAttribute("paging");
 	<section class="app-content">
 		<div class="row">
 				<div class="col-md-12">
-				<%=paging.getP() %>/<%=paging.getTotalPage() %>
+				<c:out value="${ paging.p}" /> <%//=paging.getP() %>/<c:out value="${paging.totalPage}" /><%//=paging.getTotalPage() %>
 					<div class="mail-toolbar m-b-lg pull-right">								
 						<div class="btn-group pull-right" role="group">
-							<a href="?p=<%=paging.getP()-1 %>" class="btn btn-default <%=(paging.getP() == 1)?"disabled":"" %>"><i class="fa fa-chevron-left"></i></a>
-							<a href="?p=<%=paging.getP()+1 %>" class="btn btn-default <%=(paging.getP() ==paging.getTotalPage())?"disabled":"" %>"><i class="fa fa-chevron-right"></i></a>
+							<a href="?p=<c:out value="${paging.p-1 }" /> <%//=paging.getP()-1 %>" class="btn btn-default <c:out value="${paging.p eq 1? 'disabled':'' }" /> <%//=(paging.getP() == 1)?"disabled":"" %>"><i class="fa fa-chevron-left"></i></a>
+							<a href="?p=${paging.p+1 } <%//=paging.getP()+1 %>" class="btn btn-default <c:out value="${paging.p eq paging.totalPage? 'disabled':'' }" /> <%//=(paging.getP() ==paging.getTotalPage())?"disabled":"" %>"><i class="fa fa-chevron-right"></i></a>
 						</div>
 						
 						<div class="btn-group" role="group" style="margin-left:1rem;">
@@ -41,35 +39,26 @@ PagingDTO paging = (PagingDTO) request.getAttribute("paging");
 				<p class="m-b-lg docs">설명</p>
 				<div class="table-responsive">
 					<table class="table">
-<%
-//boolean dataChk = false;  //boolean기본타입은 false
-String dataChk = "false";
-int rowNum= paging.getTotal()-((paging.getP()-1)*paging.getPageRow());
-Iterator<BoardVO> it = list.iterator();
-while(it.hasNext()){
-	BoardVO data = it.next();
+	
+<c:set var="rowNum" value="${paging.total-((paging.p-1)*paging.pageRow) }" />	
+<c:forEach var="data"  items="${list}">
 
-%>					
 						<tr>
-							<td><%=rowNum-- %>
-							<a href="View?bo_num=<%=data.getBo_num()%>"><%=data.getBo_title() %></a></td>
-							<td align="right"><%=data.getBo_inputdate() %></td>
+							<td><c:out value="${rowNum}" /><%//=rowNum-- %>
+							<a href="View?bo_num=<c:out value="${ data.bo_num}" /> <%//=data.getBo_num()%>">
+							<c:out value="${data.bo_title}" /><%//=data.getBo_title() %></a></td>
+							<td align="right"><fmt:formatDate value="${data.bo_inputdate}" /><%//=data.getBo_inputdate() %></td>
 						</tr>
-<%
-dataChk = "true";
-}
+						
+		<c:set var="rowNum" value="${rowNum-1}" />
+</c:forEach>		
 
-//if(!dataChk)
-	//if(dataChk == false){
-	if("false".equals(dataChk)){
-%>
-
+<c:if test="${rownum eq 0 }">
 						<tr>
 							<td colspan="8">등록된 글이 없습니다.</td>
 						</tr>
-<%
-	}
-%>
+</c:if>
+
 					</table>
 				</div>
 			</div>
