@@ -4,9 +4,10 @@
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <%
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%--  <%
   BoardVO view = (BoardVO) request.getAttribute("view");  
-  %>
+  %> --%>
   <%@ include file="includes/header.jsp" %>
   
 			<div class="wrap">
@@ -23,28 +24,28 @@
 						</div>
 						<form method= "post" class="form-horizontal" action="">
 						<!-- 없는 타입을 쓰면 텍스트로 출력됨  hiddena-->
-						<input id="bo_num" type="hidden" name="bo_num" value="<%=view.getBo_num() %>">
+						<input id="bo_num" type="hidden" name="bo_num" value="<c:out value="${view.bo_num }" /><%//=view.getBo_num() %>">
 							<div class="form-group">
 								<label  for="bo_category" class="col-sm-3 control-label">카테고리:</label>
 								<div class="col-sm-9">
 									<select id="bo_category" name="bo_category" class="form-control">
-										<option value="html" <%="html".equals(view.getBo_category())?"selected":"" %>>HTML</option>
-										<option value="css" <%="css".equals(view.getBo_category())?"selected":"" %> >CSS</option>
-										<option value="js" <%="js".equals(view.getBo_category())?"selected":"" %>>JS</option>
+										<option value="html" <c:out value="${'html' eq view.bo_category?'selected':''}" /> <%//="html".equals(view.getBo_category())?"selected":"" %>>HTML</option>
+										<option value="css" <c:out value="${'css' eq view.bo_category?'selected':''}" />  <%//="css".equals(view.getBo_category())?"selected":"" %> >CSS</option>
+										<option value="js" <c:out value="${'js' eq view.bo_category?'selected':''}" />  <%//="js".equals(view.getBo_category())?"selected":"" %>>JS</option>
 								</select>
 							</div>
 							</div>
 							<div class="form-group">
 								<label for="bo_title" class="col-sm-3 control-label">제목:</label>
 								<div class="col-sm-9">
-									<input id="bo_title" type="text" name="bo_title" class="form-control" id="exampleTextInput1" value="<%=view.getBo_title() %>" placeholder="제목을 입력하세요">
+									<input id="bo_title" type="text" name="bo_title" class="form-control" id="exampleTextInput1" value="<c:out value='${view.bo_title}' /><%//=view.getBo_title() %>" placeholder="제목을 입력하세요">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="bo_content" class="col-sm-3 control-label">내용:</label>
 								<div class="col-sm-9">
-									<textarea id="bo_content" class="form-control" name="bo_content" id="textarea1" placeholder="내용을 입력하세요..."><%=view.getBo_content() %></textarea>
+									<textarea id="bo_content" class="form-control" name="bo_content" id="textarea1" placeholder="내용을 입력하세요..."><c:out value='${view.bo_content}' /><%//=view.getBo_content() %></textarea>
 								</div>
 							</div>
 							
@@ -64,7 +65,7 @@ $(document).ready(function(){
 	$('#modifybtn').on('click',function(e){
 		e.preventDefault();
 		
-		let bo_num = "<%=view.getBo_num() %>";
+		let bo_num = "<c:out value='view.bo_num' /><%//=view.getBo_num() %>";
 		let bo_category = $('#bo_category').val().trim();
 		let bo_title = $('#bo_title').val().trim();
 		let bo_content = $('#bo_content').val().trim();
