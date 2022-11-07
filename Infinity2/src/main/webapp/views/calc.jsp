@@ -5,7 +5,7 @@
 		<table>
 			<tr>
 				<td colspan="4" style="text-align:right;">
-						<span id="res" style="font-size:2rem;"></span>
+						<span id="res" style="font-size:2rem;">0</span>
 				</td>
 			</tr>
 			
@@ -56,8 +56,8 @@ $(document).ready(function(){
 		var calc = $(this).val();
 		
 		var calc2 = $('#res').text()+$(this).val();
-		
-		$('#res').text(calc2);
+				
+		$('#res').text(Number(calc2));
 		
 		
 		//변수를 만들어서 저장해야되나 
