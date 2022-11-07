@@ -262,6 +262,7 @@ if((sess_id == null || "".equals(sess_id))){
           <ul class="submenu">
             <li><a href="Slide"><span class="menu-text">제이쿼리</span></a></li>
             <li><a href="TradingList"><span class="menu-text">거래명세서</span></a></li>
+             <li><a href="Calc"><span class="menu-text">계산기</span></a></li>
           </ul>
           </li>
           
