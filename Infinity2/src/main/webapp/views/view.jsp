@@ -53,7 +53,7 @@ List<CommentVO> list = (List<CommentVO>) request.getAttribute("list");
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">작성일:</label>
 								<div class="col-sm-9">
-									<c:out value="${view.bo_inputdate }" /><%//=view.getBo_inputdate() %>
+									<fmt:formatDate value="${view.bo_inputdate}" pattern="yyyy-MM-dd hh:mm:ss"/>  <%//=view.getBo_inputdate() %>
 								</div>
 							</div>
 							<div class="row">

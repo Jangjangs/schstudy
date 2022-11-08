@@ -47,7 +47,7 @@
 							<td><c:out value="${rowNum}" /><%//=rowNum-- %>
 							<a href="View?bo_num=<c:out value="${ data.bo_num}" /> <%//=data.getBo_num()%>">
 							<c:out value="${data.bo_title}" /><%//=data.getBo_title() %></a></td>
-							<td align="right"><fmt:formatDate value="${data.bo_inputdate}" pattern="yyyy-MM-dd" /><%//=data.getBo_inputdate() %></td>
+							<td align="right"><fmt:formatDate value="${data.bo_inputdate}" pattern="yyyy-MM-dd HH:mm:ss" /><%//=data.getBo_inputdate() %></td>
 						</tr>
 						
 		<c:set var="rowNum" value="${rowNum-1}" />

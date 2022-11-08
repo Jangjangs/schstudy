@@ -121,7 +121,7 @@ public class BoardMapper {
 				board.setBo_mb_id(rs.getString("bo_mb_id"));
 				board.setBo_mb_name(rs.getString("bo_mb_name"));
 				board.setBo_hit( rs.getInt("bo_hit"));
-				board.setBo_inputdate( rs.getDate("bo_inputdate"));
+				board.setBo_inputdate( rs.getTimestamp("bo_inputdate"));
 				board.setBo_ip(rs.getString("bo_ip"));
 				
 				list.add(board);
@@ -200,7 +200,7 @@ public class BoardMapper {
 				board.setBo_mb_id(rs.getString("bo_mb_id"));
 				board.setBo_mb_name(rs.getString("bo_mb_name"));
 				board.setBo_hit( rs.getInt("bo_hit"));
-				board.setBo_inputdate( rs.getDate("bo_inputdate"));
+				board.setBo_inputdate( rs.getTimestamp("bo_inputdate"));
 				board.setBo_ip(rs.getString("bo_ip"));
 				
 			}
