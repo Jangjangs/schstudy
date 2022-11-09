@@ -64,7 +64,7 @@ $(document).ready(function(){
 			$('#res').text(Number(calc2));
 		}
 		
-		
+		 
 	});
 	
 });
