@@ -1,0 +1,32 @@
+Infinity App is a fully responsive and full featured Web App and Admin Template powered by the popular Bootstrap framework. It is built with web developers in mind and focuses on providing a great User Experience with a modern design, fast User Interface and many awesome features.
+
+that can be used to build all kind of creative projects: Web Applications, Backend Websites, Custom Admin Panels, Admin Dashboards, CMS, CRM or even a custom Website. I encourage you to have a good look at live preview and discover all the included features!
+
+Features
+
+Grid lines included
+Well organized layers
+Easy to customize
+Free icons used
+Free fonts used
+
+What Do You Get:
+
+21 PSD
+Documentation
+
+
+The images used in the template are not included in the main download file, they are only for the preview purpose.
+
+Resources
+
+lato :
+https://www.google.com/fonts/specimen/Lato
+
+Dancing Script :
+https://www.google.com/fonts/specimen/Dancing+Script
+
+Icons "brankic1979-icon-
+set":http://www.brankic1979.com/icons/
+
+Img : behance , filcr

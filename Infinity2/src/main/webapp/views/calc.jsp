@@ -48,8 +48,8 @@
 $(document).ready(function(){
 	$("button").on("click",function(e){
 		e.preventDefault();
-		
 		var calc = $(this).val();
+		console.log(calc);
 		
 		var calc2 = $('#res').text()+calc;
 		
@@ -57,7 +57,10 @@ $(document).ready(function(){
 
 		if(isNaN(Number(calc2))){
 			$('#res').text(calc2);
-		}else{
+		}else if(calc==='.'){
+			$('#res').text(calc2);
+		}
+		else{
 			$('#res').text(Number(calc2));
 		}
 		

@@ -1,0 +1,16 @@
+ My PSD theme Documentation contains :
+1.in this pack you will have 
+ 1.psd file
+ 2.placehold fil
+ 3.info.text
+ 4.Documentation.text
+ 5.how to usd theis theame
+2.Fonts used:
+its just lato (free google font : https://www.google.com/fonts/specimen/Lato
+
+Dancing Script :
+https://www.google.com/fonts/specimen/Dancing+Script
+
+ )
+3.Color i used blue and wiht and blak
+4.icon it free (and the link is in info.text)
