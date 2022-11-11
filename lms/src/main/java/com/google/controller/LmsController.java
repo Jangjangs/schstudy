@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/admin/*")
+@RequestMapping("/lms/*")
 public class LmsController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LmsController.class);
