@@ -14,9 +14,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.domain.SampleDTO;
 import com.google.domain.SampleDTOList;
@@ -76,7 +78,7 @@ public class SampleController {
 	}
 	
 	/**
-	 * List
+	 * 배열
 	 * ?a=a&a=b&a=c
 	 * hobby=야구&hobby=축구&hobby=골프
 	 * request.getParameterValues()
@@ -104,10 +106,10 @@ public class SampleController {
 	 * @param binder
 	 */
 	/*
-	 * @InitBinder public void initBinder(WebDataBinder binder) { SimpleDateFormat
-	 * format = new SimpleDateFormat("yyyy-MM-dd");
-	 * binder.registerCustomEditor(java.util.Date.class, new
-	 * CustomDateEditor(format, false)); }
+	 * @InitBinder 
+	 * public void initBinder(WebDataBinder binder) { 
+	 * SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	 * binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(format, false)); }
 	 */
 	/**
 	 * ?title=aaaa&dueDate=2022-11-11
@@ -186,6 +188,16 @@ public class SampleController {
 		return new ResponseEntity<String>(msg, header, HttpStatus.OK);
 	}
 	
+	@GetMapping("/exUpload")
+	public void exUpload() {
+		log.info("/exUpload...");
+	}
 	
-	
+	@PostMapping("/exUploadPost")
+	public void exUploadPost(ArrayList<MultipartFile> files) {
+		files.forEach(file->{
+			log.info("name:" + file.getOriginalFilename());
+			log.info("size:" + file.getSize());
+		});
+	}
 }
