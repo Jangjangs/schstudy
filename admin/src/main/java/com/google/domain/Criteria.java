@@ -16,7 +16,6 @@ public class Criteria {
 
 	private int pageNum; //현재페이지
 	private int amount; //보여줄 페이지 수
-	private int startPage;//시작페이지
 	
 	public Criteria() {
 		super();
