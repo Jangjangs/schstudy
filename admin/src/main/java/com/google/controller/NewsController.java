@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.domain.BoardVO;
+import com.google.domain.Criterib;
 import com.google.domain.NewsVO;
 import com.google.service.BoardService;
 import com.google.service.NewsService;
@@ -25,8 +26,8 @@ public class NewsController {
 private NewsService service;
 	
 	@GetMapping("/list")
-	public void list(Model model ) {
-		model.addAttribute("list", service.getList());
+	public void list(Criterib cri,Model model ) {
+		model.addAttribute("list", service.getList(cri));
 		
 	}
 	
@@ -73,4 +74,6 @@ private NewsService service;
 		rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/news/list";
 	}
+	
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.google.domain.BoardVO;
+import com.google.domain.Criterib;
 import com.google.domain.NewsVO;
 import com.google.mapper.BoardMapper;
 import com.google.mapper.NewsMapper;
@@ -31,6 +32,7 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public NewsVO get(long bno) {
+		mapper.updatehit(bno);
 		return mapper.read(bno);
 	}
 
@@ -44,6 +46,11 @@ public class NewsServiceImpl implements NewsService {
 	public void modify(NewsVO vo) {
 		mapper.update(vo);
 		
+	}
+
+	@Override
+	public List<NewsVO> getList(Criterib cri) {
+		return mapper.getListWithPaging(cri);
 	}
 
 }

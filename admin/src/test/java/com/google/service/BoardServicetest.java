@@ -39,7 +39,7 @@ public class BoardServicetest {
 	
 	//@Test
 	public void testGetList() {
-		service.getList().forEach(board->log.info(board));
+		//service.getList().forEach(board->log.info(board));
 	}
 	
 	@Test

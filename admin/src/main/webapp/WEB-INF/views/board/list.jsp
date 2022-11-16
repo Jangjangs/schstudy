@@ -20,6 +20,7 @@
 						<col style="width:100px"/>
 						<col style="width:150px"/>
 						<col style="width:150px"/>
+						<col style="width:80px"/>
 						</colgroup>
 						
 							<tr>
@@ -28,6 +29,7 @@
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>수정일</th>
+								<th>조회수</th>
 							</tr>
 							<c:set value="0" var="rowCnt"/>
 						<c:forEach items="${list }" var="board">
@@ -38,17 +40,49 @@
 								<td><c:out value="${board.writer }"/></td>
 								<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 								<td><fmt:formatDate value="${board.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${board.hit }</td>
 							</tr>
 							<c:set value="${rowCnt+1 }" var="rowCnt"/>
 							</c:forEach>
 							
 							<c:if test="${rowCnt eq 0}">
 							<tr>
-								<td colspan="5">등록된 글이 없습니다.</td>
+								<td colspan="6">등록된 글이 없습니다.</td>
 							</tr>
 							</c:if>
 						</table>
 					</div>
+					<!-- page -->
+					<nav style="text-align:right;">
+					  <ul class="pagination">
+					  <c:if test="${pageMaker.prev}">
+					    <li>
+					      <a href="?pageNum=${pageMaker.startPage-1}&amount=${pageMaker.cri.amount}" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+					  </c:if>
+					    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="num">
+					   <c:if test="${pageMaker.cri.pageNum eq num}">
+					    <li  class="active" >
+					    	<a>${num} </a>
+					    </li>
+					    </c:if>
+					    <c:if test="${pageMaker.cri.pageNum ne num}">
+					    <li>
+					    	<a href="?pageNum=${num }&amount=${pageMaker.cri.amount}">${num} </a>
+					    </li>
+					    </c:if>
+					    </c:forEach>
+					     <c:if test="${pageMaker.next}">
+					    <li>
+					      <a href="?pageNum=${pageMaker.endPage+1}&amount=${pageMaker.cri.amount}" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					     </c:if>
+					  </ul>
+					</nav>
 				</div><!-- .widget -->
 			</div><!-- END column -->
 		</div>

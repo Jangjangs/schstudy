@@ -3,6 +3,7 @@ package com.google.service;
 import java.util.List;
 
 import com.google.domain.BoardVO;
+import com.google.domain.Criterib;
 import com.google.domain.NewsVO;
 
 public interface NewsService {
@@ -18,4 +19,6 @@ public interface NewsService {
 	public void remove(long bno);	//delete
 	
 	public void modify(NewsVO vo);	//update
+	
+	public List<NewsVO> getList(Criterib cri);
 }

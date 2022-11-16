@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.google.domain.BoardVO;
+import com.google.domain.Criteria;
 import com.google.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -17,10 +18,15 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
 	@Override
-	public List<BoardVO> getList() {
-		return mapper.getList();
+	public List<BoardVO> getList(Criteria cri) {
+		return mapper.getListWithPaging(cri);
 	}
 
+	@Override
+	public int getListTotal() {
+		return mapper.getListTotal();
+	}
+	
 	@Override
 	public void register(BoardVO vo) {
 		mapper.insert(vo);
@@ -29,6 +35,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO get(long bno) {
+		mapper.updateHit(bno); //조회수 증가
 		return mapper.read(bno);
 	}
 
@@ -43,5 +50,9 @@ public class BoardServiceImpl implements BoardService {
 		mapper.update(vo);
 		
 	}
+
+
+
+
 
 }
