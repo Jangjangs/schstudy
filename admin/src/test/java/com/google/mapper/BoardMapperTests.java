@@ -25,15 +25,20 @@ public class BoardMapperTests {
 		mapper.getList().forEach(board->log.info(board));
 	}
 	
-	//@Test
+	@Test
 	public void testGetListWithPaging() {
 		Criteria cri = new Criteria(1,20);
+		cri.setType("TCW");
+		cri.setKeyword("수정");
 		mapper.getListWithPaging(cri).forEach(board->log.info(board));
 	}
 	
-	@Test
+	//@Test
 	public void testGetListTotal() {
-		int total = mapper.getListTotal();
+		Criteria cri = new Criteria(1,20);
+		cri.setType("TC");
+		cri.setKeyword("수정");
+		int total = mapper.getListTotal(cri);
 		log.info("[DEG]:"+total);
 	}
 	

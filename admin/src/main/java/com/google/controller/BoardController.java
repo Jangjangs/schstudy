@@ -27,7 +27,7 @@ private BoardService service;
 	@GetMapping("/list")
 	public void list(Criteria cri,Model model ) {
 		model.addAttribute("list", service.getList(cri));
-		int total = service.getListTotal();
+		int total = service.getListTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 	}

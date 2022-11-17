@@ -70,36 +70,38 @@
 					
 					<div class="col-md-6">
 					<!-- page -->
-					<nav style="text-align:right;">
-					  <ul class="pagination">
-					  <c:if test="${pageMaker.prev}">
-					    <li>
-					      <a href="${pageMaker.startPage-1}" aria-label="Previous" class="btn_pagination">
-					        <span aria-hidden="true">&laquo;</span>
-					      </a>
-					    </li>
-					  </c:if>
-					    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="num">
-					   <c:if test="${pageMaker.cri.pageNum eq num}">
-					    <li  class="active" >
-					    	<a>${num} </a>
-					    </li>
-					    </c:if>
-					    <c:if test="${pageMaker.cri.pageNum ne num}">
-					    <li>
-					    <a href = "${num }" class="btn_pagination">${num }</a>
-					    </li>
-					    </c:if>
-					    </c:forEach>
-					     <c:if test="${pageMaker.next}">
-					    <li>
-					      <a href="${pageMaker.endPage+1}"  aria-label="Next" class="btn_pagination">
-					        <span aria-hidden="true">&raquo;</span>
-					      </a>
-					    </li>
-					     </c:if>
-					  </ul>
-					</nav>
+				<nav style="text-align:right;">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+					  		<li>
+					    		<a href="?pageNum=${pageMaker.startPage-1}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type }&keyword=${pageMaker.cri.keyword}" aria-label="Previous">
+					      			<span aria-hidden="true">&laquo;</span>
+					     		</a>
+					   		</li>
+					 	</c:if>
+					 
+						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="num">
+					 		<c:if test="${pageMaker.cri.pageNum eq num}">
+					    		<li  class="active" >
+					    			<a>${num} </a>
+					   			</li>
+					   		</c:if>
+					   		<c:if test="${pageMaker.cri.pageNum ne num}">
+					   			<li>
+					    			<a href="?pageNum=${num}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type }&keyword=${pageMaker.cri.keyword}">${num }</a>
+					    		</li>
+					    	</c:if>
+						</c:forEach>
+					 
+						<c:if test="${pageMaker.next}">
+					  		<li>
+					     		<a href="?pageNum=${pageMaker.endPage+1}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type }&keyword=${pageMaker.cri.keyword}" aria-label="Next">
+					     			<span aria-hidden="true">&raquo;</span>
+					     		</a>
+					  		</li>
+						</c:if>
+					</ul>
+				</nav>
 					<!-- page -->
 					</div>
 				</div>
@@ -107,24 +109,5 @@
 			</div><!-- END column -->
 		</div>
 	</div>
-	<form id ="frm">
-	<input type="hidden" name="pageNum" value=""> 
-	<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
-	<input type="hidden" name="type" value="${pageMaker.cri.type}"> 
-	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
-	<!-- <button></button> -->
-	</form>
 	
-	<<script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn_pagination").on("click",function(e){
-			e.preventDefault();
-			console.log("BTN"+$(this).attr("href"));
-			let href = $(this).attr("href");
-			$("input[name=pageNum]").val(href);
-			$("#frm").submit();
-		});
-		
-	});
-	</script>
 <%@ include file="../includes/footer.jsp" %>
