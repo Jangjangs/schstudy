@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.domain.Criteria;
+import com.google.domain.ReplyPageDTO;
 import com.google.domain.ReplyVO;
 import com.google.service.ReplyService;
 
@@ -53,10 +54,10 @@ public class ReplyController {
 	@GetMapping(value = "/pages/{bno}/{page}", produces = 
 		{MediaType.APPLICATION_XML_VALUE, 
 		MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, 
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, 
 												@PathVariable("bno") long bno){
 		Criteria cri = new Criteria(page, 10);
-		return new ResponseEntity<List<ReplyVO>>(service.getListWithPaging(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<ReplyPageDTO>(service.getListWithPaging(cri, bno), HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/{rno}")
