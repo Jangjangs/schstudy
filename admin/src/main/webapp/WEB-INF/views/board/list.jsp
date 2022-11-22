@@ -36,7 +36,11 @@
 							<tr>
 								<td><c:out value="${board.bno }"/></td>
 								<td><a href="get?bno=<c:out value="${board.bno }"/>">
-								<c:out value="${board.title }"/></a></td>
+								<c:out value="${board.title }"/></a>
+								<c:if test="${board.replyCnt gt 0 }">
+									<span class="badge badge-danger"><c:out value="${board.replyCnt }"></c:out></span>
+								</c:if>
+								</td>
 								<td><c:out value="${board.writer }"/></td>
 								<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 								<td><fmt:formatDate value="${board.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
