@@ -43,13 +43,48 @@ function showUploadFile(uploadResultArr){
 	console.log(uploadResultArr);
 	let str = "";
 	$(uploadResultArr).each(function( i, obj){
-		str += "<li>" + obj.fileName + "</li>";
+		//str += "<li>" + obj.fileName + "</li>";
+		//obj.image // 이미지일 경우에 처리
+		var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+		var fileRealPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+		
+		str += "<li><a href='download?fileName=" + fileRealPath + "'>";
+		str += "<img src='display?fileName=" + fileCallPath + "'></a>";
+		str += "<span data-realfile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='image'>X</span></li>";
 	});
 	
 	$(".uploadResult ul").append(str); //html
 }
 
 $(document).ready(function(){
+	
+	$(".uploadResult").on("click","span", function(){
+		//console.log("span click");
+		let targetRealfile = $(this).data("realfile"); //원본파일
+		let targetfile = $(this).data("file"); //썸네일파일
+		let type = $(this).data("type");
+		let span = $(this);
+		
+		console.log(targetfile);
+		console.log(type);
+		
+		$.ajax({
+			url: "deleteFile",
+			data:{
+				fileRealName:targetRealfile,
+				fileName:targetfile,
+				type:type
+			},
+			dataType:"text",
+			type:"POST",
+			success:function(result){
+				console.log(result);
+				if("delete" == result){
+					span.parent().remove();
+				}
+			}
+		});
+	});
 	
 	var cloneObj = $(".uploadDiv").clone();
 	

@@ -28,6 +28,7 @@ public class CommonUtil {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			return contentType.startsWith("image");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
