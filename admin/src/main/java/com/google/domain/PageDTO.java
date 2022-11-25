@@ -16,6 +16,11 @@ public class PageDTO {
 	private int total; //전체 글수
 	private Criteria cri; //페이징
 	
+	public PageDTO(Criteria cri) {
+		super();
+		this.cri = cri;
+	}
+	
 	public PageDTO(Criteria cri, int total) {
 		super();
 		this.total = total;
@@ -34,6 +39,5 @@ public class PageDTO {
 		this.next = this.endPage < realEnd; 
 		// 보이는 엔드페이지(endPage)가 진짜엔드페이지(realEnd)보다 크면 false 작으면 true
 	}
-	
-	
+
 }

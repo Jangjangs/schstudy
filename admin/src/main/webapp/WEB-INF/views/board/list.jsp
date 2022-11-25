@@ -35,7 +35,7 @@
 						<c:forEach items="${list }" var="board">
 							<tr>
 								<td><c:out value="${board.bno }"/></td>
-								<td><a href="get?bno=<c:out value="${board.bno }"/>">
+								<td><a href="get${pageMaker.cri.listLink}&bno=${board.bno }">
 								<c:out value="${board.title }"/></a>
 								<c:if test="${board.replyCnt gt 0 }">
 									<span class="badge badge-danger"><c:out value="${board.replyCnt }"></c:out></span>
@@ -119,16 +119,16 @@
 	<!-- <button></button> -->
 	</form>
 	
-	<<script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn_pagination").on("click",function(e){
-			e.preventDefault();
-			console.log("BTN"+$(this).attr("href"));
-			let href = $(this).attr("href");
-			$("input[name=pageNum]").val(href);
-			$("#frm").submit();
-		});
-		
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".btn_pagination").on("click",function(e){
+		e.preventDefault();
+		console.log("BTN"+$(this).attr("href"));
+		let href = $(this).attr("href");
+		$("input[name=pageNum]").val(href);
+		$("#frm").submit();
 	});
-	</script>
+	
+});
+</script>
 <%@ include file="../includes/footer.jsp" %>

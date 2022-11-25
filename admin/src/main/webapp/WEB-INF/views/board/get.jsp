@@ -18,8 +18,13 @@
 								Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form (which doesn't have to be a <code>&lt;form&gt;</code>). Doing so changes <code>.form-groups</code> to behave as grid rows, so no need for <code>.row</code>.
 							</small>
 						</div>
+						
 						<form method="post" class="form-horizontal" action="">
-						<input type="hidden" name="bno" value="${board.bno }">
+						<input type="hidden" name="bno" value="${board.bno }"> 
+						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"> 
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
+						<input type="hidden" name="type" value="${pageMaker.cri.type}"> 
+						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 								<div class="col-sm-9">
@@ -51,14 +56,24 @@
 							
 							<div class="row">
 								<div class="col-sm-9 col-sm-offset-3">
-									<a href="modify?bno=${board.bno }" class="btn btn-success btn-sm">Modify Button</a>
+									<a href="modify${pageMaker.cri.listLink}&bno=${board.bno }" class="btn btn-success btn-sm">Modify Button</a>
 									<button type="button" id="btn_remove" class="btn btn-success btn-sm">Remove Button</button>
 									<a href="javascript:history.go(-1);" class="btn btn-success btn-sm">List Button</a>
 								</div>
 							</div>
 						</form>
 					</div><!-- .widget-body -->
-				</div><!-- .widget -->
+					
+				<div class="mail-item">
+					<div style="height:32px; padding-top:6px;">Files</div>
+					<div class="uploadResult">
+						<ul style="display:flex;">
+						
+						</ul>
+					</div>
+				</div><!-- END mail-item -->
+			</div><!-- .widget -->
+				
 				<div class="mail-item">
 					<div style="display:inline-block; height:32px; padding-top:6px;">Reply</div>
 					<div style="display:inline-block; float:right;"><button  data-toggle="modal" data-target="#composeModal" class="btn btn-default btn-sm" onclick="btn_new();">New Reply</button></div>
@@ -348,7 +363,36 @@ $(document).ready(function(){
 	var bno = '${board.bno}';
 	$.getJSON("./getAttachList", {bno:bno}, function(arr){
 		console.log(arr);
-	})
+		
+		let str = "";
+		$(arr).each(function(i,attach){
+			
+			var fileRealPath 
+			= encodeURIComponent(attach.uploadPath + "/" + attach.uuid + "_" + attach.fileName);
+			
+			//그림파일
+			if(attach.fileType){
+				var fileCallPath 
+					= encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.fileName);
+				
+			
+				str += '<li style="padding:5px;">';
+				str += '<a href="../download?fileName='+fileRealPath+'">';
+				str += '<img src="../display?fileName='+fileCallPath+'">';
+				str += '</a>';
+				str += '</li>';
+				
+			}else{
+				str += '<li style="padding:5px;">';
+				str += '<a href="../download?fileName='+fileRealPath+'">';
+				str += '<img src="/admin/resources/assets/images/attach.png" width="100px;">';
+				str += '</a>';
+				str += '</li>';
+			}
+		});
+		
+		$(".uploadResult ul").html(str);
+	});
 	
 });
 </script>

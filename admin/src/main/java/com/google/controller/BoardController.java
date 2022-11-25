@@ -1,5 +1,9 @@
 package com.google.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -55,8 +59,9 @@ private BoardService service;
 	}
 	
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") long bno,Model model) {
+	public void get(@RequestParam("bno") long bno,Model model, Criteria cri) {
 		model.addAttribute("board", service.get(bno));
+		model.addAttribute("pageMaker", new PageDTO(cri));
 			
 	}
 	
@@ -69,9 +74,16 @@ private BoardService service;
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") long bno) {
-		service.remove(bno);
-		return "redirect:/board/list";
+	public String remove(@RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr) {
+		
+		List<BoardAttachVO> attchList = service.getAttachList(bno);
+		
+		if(service.remove(bno)) {
+			deleteFiles(attchList);
+			rttr.addFlashAttribute("result","success");
+		}
+		
+		return "redirect:/board/list"+cri.getListLink();
 	}
 	
 	/*
@@ -89,5 +101,33 @@ private BoardService service;
 		//board/list로 이동하면서 result값(글번호)를 가져감
 		rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/board/list";
+	}
+	
+	/**
+	 * 파일 삭제처리
+	 */
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		attachList.forEach(attach->{
+			try {
+				Path file 
+				= Paths.get("D:/upload/"+attach.getUploadPath()+"/"+attach.getUuid()+"_"+attach.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				//이미지일경우 썸네일 삭제
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbnail 
+					= Paths.get("D:/upload/"+attach.getUploadPath()+"/s_"+attach.getUuid()+"_"+attach.getFileName());
+					Files.delete(thumbnail);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }

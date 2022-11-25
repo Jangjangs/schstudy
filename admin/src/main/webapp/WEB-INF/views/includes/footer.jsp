@@ -266,6 +266,6 @@
 	<!-- endbuild -->
 	<script src="/admin/resources/libs/bower/moment/moment.js"></script>
 	<script src="/admin/resources/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
-	<script src="assets/js/fullcalendar.js"></script>
+	<script src="/admin/resources/assets/js/fullcalendar.js"></script>
 </body>
 </html>

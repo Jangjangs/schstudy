@@ -71,7 +71,7 @@
 	</div>
 
 <script type="text/javascript">
-var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp)$"); //정규표현식
+var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp|zip|hwp)$"); //정규표현식
 var maxSize = 1024*1024*5; //5mb
 
 function checkExtension(fileName, fileSize){
@@ -108,7 +108,7 @@ function showUploadFile(uploadResultArr){
 		} else{
 			var fileRealPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 			
-			str += "<li><a href='../download?fileName=" + fileRealPath + "'>";
+			str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
 			str += "파일아이콘";
 			str += "<span data-realfile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='file'>X</span></li>";
 		}
@@ -120,6 +120,23 @@ function showUploadFile(uploadResultArr){
 $(document).ready(function(){
 	$("button[type=submit]").on("click",function(e){
 		e.preventDefault();
+		
+		let title = $("#title").val();
+		let content = $("#content").val();
+		let writer = $("#writer").val();
+		if(title == ''){
+			alert("제목을 입력하세요.");
+			return;
+		}
+		if(content == ''){
+			alert("내용을 입력하세요.");
+			return;
+		}
+		if(writer) == ''){
+			alert("작성자를 입력하세요.");
+			return;
+		}
+		
 		let str = "";
 		$(".uploadResult ul li").each(function(i, obj){
 			console.log(obj);
@@ -170,36 +187,38 @@ $(document).ready(function(){
 			}
 		});
 		
-		$(".uploadResult").on("click","span", function(){
-			//console.log("span click");
-			let targetRealfile = $(this).data("realfile"); //원본파일
-			let targetfile = $(this).data("file"); //썸네일파일
-			let type = $(this).data("type");
-			let span = $(this);
-			
-			//console.log(targetfile);
-			//console.log(type);
-			
-			$.ajax({
-				url: "../deleteFile",
-				data:{
-					fileRealName:targetRealfile,
-					fileName:targetfile,
-					type:type
-				},
-				dataType:"text",
-				type:"POST",
-				success:function(result){
-					//console.log(result);
-					if("delete" == result){
-						span.parent().remove();
-						
-						$(".uploadDiv").html(cloneObj.html());
-					}
+
+	});
+	
+	$(".uploadResult").on("click","span", function(){
+		//console.log("span click");
+		let targetRealfile = $(this).data("realfile"); //원본파일
+		let targetfile = $(this).data("file"); //썸네일파일
+		let type = $(this).data("type");
+		let span = $(this);
+		
+		//console.log(targetfile);
+		//console.log(type);
+		
+		$.ajax({
+			url: "../deleteFile",
+			data:{
+				fileRealName:targetRealfile,
+				fileName:targetfile,
+				type:type
+			},
+			dataType:"text",
+			type:"POST",
+			success:function(result){
+				//console.log(result);
+				if("delete" == result){
+					span.parent().remove();
+					
+					$(".uploadDiv").html(cloneObj.html());
 				}
-			});
+			}
 		});
-	})
+	});
 	
 });
 </script>
