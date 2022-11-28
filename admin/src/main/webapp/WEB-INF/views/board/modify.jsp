@@ -15,7 +15,7 @@
 								Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form (which doesn't have to be a <code>&lt;form&gt;</code>). Doing so changes <code>.form-groups</code> to behave as grid rows, so no need for <code>.row</code>.
 							</small>
 						</div>
-						<form method="post" class="form-horizontal" action="">
+						<form id="frm" method="post" class="form-horizontal" action="">
 						<input type="hidden" name="bno" value="${board.bno }"/>
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
@@ -195,7 +195,7 @@ $(document).ready(function(){
 				var fileCallPath 
 					= encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.fileName);
 				
-				str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
+				str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><a href='../download?fileName=" + fileRealPath + "'>";
 				str += '<a href="../download?fileName='+fileRealPath+'">';
 				str += '<img src="../display?fileName='+fileCallPath+'">';
 				str += '</a>';
@@ -203,7 +203,7 @@ $(document).ready(function(){
 				str += '</li>';
 				
 			}else{
-				str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
+				str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><a href='../download?fileName=" + fileRealPath + "'>";
 				str += '<a href="../download?fileName='+fileRealPath+'">';
 				str += '<img src="/admin/resources/assets/images/attach.png" width="100px;">';
 				str += '</a>';

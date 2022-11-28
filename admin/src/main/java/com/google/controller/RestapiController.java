@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 @RestController
 @RequestMapping("/restapi/*")
 @Log4j
-public class SampleController {
+public class RestapiController {
 
 	/**
 	 * 단순문자열 반환
