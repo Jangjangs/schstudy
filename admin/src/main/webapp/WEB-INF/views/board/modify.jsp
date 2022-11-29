@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+    
 <%@ include file="../includes/header.jsp" %>
 	<div class="wrap">
 		<div class="row">
@@ -17,6 +20,8 @@
 						</div>
 						<form id="frm" method="post" class="form-horizontal" action="">
 						<input type="hidden" name="bno" value="${board.bno }"/>
+						
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 								<div class="col-sm-9">
@@ -40,8 +45,12 @@
 							
 							<div class="form-group">
 								<div class="col-sm-9 col-sm-offset-3">
+								<sec:authentication property="principal" var="pinfo"/>
+								<sec:authorize access="isAuthenticated()">
+								<c:if test="${pinfo.username eq board.writer }">
 									<button type="submit" class="btn btn-success btn-sm">Modify Button</button>
-									
+								</c:if>
+								</sec:authorize>	
 									<a href="javascript:history.go(-2);" class="btn btn-success btn-sm">List Button</a>
 								</div>
 							</div>

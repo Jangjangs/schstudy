@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ include file="../includes/header.jsp" %>
 	<div class="wrap">
 		<div class="row">
@@ -16,6 +17,7 @@
 							</small>
 						</div>
 						<form id="frm" method="post" class="form-horizontal" action="">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 								<div class="col-sm-9">
@@ -33,7 +35,8 @@
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Writer:</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control input-sm" name="writer" id="writer" placeholder="Writer" required="required">
+									<input type="text" class="form-control input-sm" name="writer" id="writer" placeholder="Writer" readonly="readonly" required="required" value="<sec:authentication property="principal.username"/>">
+									
 								</div>
 							</div>
 							
@@ -48,7 +51,7 @@
 								<div class="col-sm-9 col-sm-offset-3">
 									<label for="uploadFile" class="col-sm-3 control-label">Attach File:</label>
 									<div class="col-sm-9 uploadDiv">
-									<input type="file" class="form-control input-sm" name="uploadFile" id="uploadFile" placeholder="uploadFile" required="required" multiple="multiple">
+									<input type="file" class="form-control input-sm" name="uploadFile" id="uploadFile" placeholder="uploadFile" multiple="multiple">
 								</div>
 								</div>
 							</div>

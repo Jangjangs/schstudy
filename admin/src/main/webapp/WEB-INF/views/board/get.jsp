@@ -3,6 +3,8 @@
      <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+    
 <%@ include file="../includes/header.jsp" %>
 	<div class="wrap">
 		<div class="row">
@@ -20,11 +22,15 @@
 						</div>
 						
 						<form method="post" class="form-horizontal" action="">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<input type="hidden" name="bno" value="${board.bno }"> 
 						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"> 
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
 						<input type="hidden" name="type" value="${pageMaker.cri.type}"> 
 						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
+						<input type="hidden" name="writer" value="${board.writer}"> 
+							
+							
 							<div class="form-group">
 								<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 								<div class="col-sm-9">
@@ -56,8 +62,13 @@
 							
 							<div class="row">
 								<div class="col-sm-9 col-sm-offset-3">
+								<sec:authentication property="principal" var="pinfo"/>
+								<sec:authorize access="isAuthenticated()">
+								<c:if test="${pinfo.username eq board.writer }">
 									<a href="modify${pageMaker.cri.listLink}&bno=${board.bno }" class="btn btn-success btn-sm">Modify Button</a>
 									<button type="button" id="btn_remove" class="btn btn-success btn-sm">Remove Button</button>
+									</c:if>
+								</sec:authorize>
 									<a href="javascript:history.go(-1);" class="btn btn-success btn-sm">List Button</a>
 								</div>
 							</div>
@@ -76,7 +87,11 @@
 				
 				<div class="mail-item">
 					<div style="display:inline-block; height:32px; padding-top:6px;">Reply</div>
-					<div style="display:inline-block; float:right;"><button  data-toggle="modal" data-target="#composeModal" class="btn btn-default btn-sm" onclick="btn_new();">New Reply</button></div>
+					<div style="display:inline-block; float:right;">
+					<sec:authorize access="isAuthenticated()">
+					<button  data-toggle="modal" data-target="#composeModal" class="btn btn-default btn-sm" onclick="btn_new();">New Reply</button>
+					</sec:authorize>
+					</div>
 				</div><!-- END mail-item -->
 				
 				<!-- a single mail -->

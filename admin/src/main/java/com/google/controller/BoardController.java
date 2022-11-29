@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ private BoardService service;
 		
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/register")
 	public void register() {
 		
@@ -73,8 +75,9 @@ private BoardService service;
 		
 	}
 	
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr) {
+	public String remove( @RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr, String writer) {
 		
 		List<BoardAttachVO> attchList = service.getAttachList(bno);
 		
@@ -93,6 +96,7 @@ private BoardService service;
 	 * }
 	 */
 	
+	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
 		
