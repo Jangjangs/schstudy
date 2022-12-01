@@ -147,6 +147,9 @@ $(document).ready(function(){
 	
 	var cloneObj = $(".uploadDiv").clone();
 	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
 	$("input[type=file]").on("change",function(){
 		var formData = new FormData();
 		var inputfile = $("input[name=uploadFile]");
@@ -168,6 +171,9 @@ $(document).ready(function(){
 			contentType:false,
 			data:formData,
 			type:"POST",
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success:function(result){
 				//console.log(result);
 				//alert("Success");

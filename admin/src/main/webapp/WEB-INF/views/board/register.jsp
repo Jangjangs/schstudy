@@ -135,7 +135,7 @@ $(document).ready(function(){
 			alert("내용을 입력하세요.");
 			return;
 		}
-		if(writer) == ''){
+		if(writer == ''){
 			alert("작성자를 입력하세요.");
 			return;
 		}
@@ -153,7 +153,9 @@ $(document).ready(function(){
 	});
 	
 	
-	var cloneObj = $(".uploadDiv").clone();
+	//var cloneObj = $(".uploadDiv").clone();
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$("input[type=file]").on("change",function(){
 		var formData = new FormData();
@@ -176,12 +178,15 @@ $(document).ready(function(){
 			contentType:false,
 			data:formData,
 			type:"POST",
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success:function(result){
 				//console.log(result);
 				//alert("Success");
 				
 				//파일선택을 초기화
-				//$(".uploadDiv").html(cloneObj.html());
+				$("#uploadFile").val('');
 				
 				
 				//파일 목록 출력
@@ -212,12 +217,15 @@ $(document).ready(function(){
 			},
 			dataType:"text",
 			type:"POST",
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success:function(result){
 				//console.log(result);
 				if("delete" == result){
 					span.parent().remove();
 					
-					$(".uploadDiv").html(cloneObj.html());
+					//$(".uploadDiv").html(cloneObj.html());
 				}
 			}
 		});

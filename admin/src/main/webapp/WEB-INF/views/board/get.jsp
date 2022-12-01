@@ -126,7 +126,7 @@
 					<textarea name="reply" id="reply" cols="30" rows="5" class="form-control" placeholder="content"></textarea>
 					
 					<div class="form-group">
-						<input name="replyer" id="replyer" type="text" class="form-control" placeholder="writer">
+						<input name="replyer" id="replyer" type="text" class="form-control" placeholder="writer" value="<sec:authentication property="principal.username"/>" readonly="readonly">
 					</div>
 				</form>
 			</div>
@@ -143,7 +143,7 @@
 function btn_new(){
 	$("#rno").val('');
 	$("#reply").val('');
-	$("#replyer").val('');
+	$("#replyer").val('<sec:authentication property="principal.username"/>');
 	
 	$(".modal-footer").empty();
 	let btn_footer = "";
@@ -258,7 +258,8 @@ function getList(){
     });
 }
 $(document).ready(function(){
-	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	getList();
 	
 	$("#btn_remove").on("click", function(){
@@ -270,12 +271,18 @@ $(document).ready(function(){
 	});
 	$(document).on("click","#btn_del",function(){
 		let rno = $('#rno').val();
+		let replyer = $('#replyer').val();
+	
 		if(confirm("정말로 삭제하시겠습니까?")){
 			// ajax 통신
 	        $.ajax({
 	            type : "DELETE",            // HTTP method type(GET, POST) 형식이다.
 	            url : "/admin/replies/"+rno,      // 컨트롤러에서 대기중인 URL 주소이다.
+	            data: JSON.stringify({rno:rno, replyer:replyer}),
 	            contentType: "application/json",
+	            beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다.
 	                // 응답코드 > 0000
 	              console.log(res);
@@ -312,6 +319,9 @@ $(document).ready(function(){
 	            url : "/admin/replies/"+rno,      // 컨트롤러에서 대기중인 URL 주소이다.
 	            contentType: "application/json",
 	            data : JSON.stringify(data),            // Json 형식의 데이터이다.
+	            beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다.
 	                // 응답코드 > 0000
 	              console.log(res);
@@ -350,6 +360,9 @@ $(document).ready(function(){
 	            url : "/admin/replies/new",      // 컨트롤러에서 대기중인 URL 주소이다.
 	            contentType: "application/json",
 	            data : JSON.stringify(data),            // Json 형식의 데이터이다.
+	            beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다.
 	                // 응답코드 > 0000
 	              //  console.log("댓글등록성공");
